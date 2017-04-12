@@ -66,7 +66,9 @@ class Log {
 
 	public:
 		~Log() {
-			fclose(_fp);
+			if (_fp) {
+				fclose(_fp);
+			}
 		};
 
 		void set_daemon(int flag);

@@ -60,8 +60,12 @@ int Log::open() {
 		std::string link_name = _log_path + "/" + _link_name;
 		unlink(link_name.c_str());
 
+		/**
+		 * link：硬链接
+		 */
 		if (link(log_file, link_name.c_str()) == -1) {
 			fclose(_fp);
+			_fp = nullptr;
 			return -1;
 		}
 	}
@@ -156,17 +160,4 @@ void Log::log(LogLevel log_level, const std::string module, const std::string fi
 	return;
 }
 
-//#define LOG_TEST
-#ifdef LOG_TEST
-int main() {
-//	Log::instance()->set_daemon(1);
-////	Log::instance()->set_log_level(LogLevel::INFO);
-////	Log::instance()->log(LogLevel::DEBUG, "Test", "%s", "hello world");
-////	Log::instance()->log(LogLevel::INFO, "Daemon", "%s", "==========Daemon Daemon");
-	debug("Test", "%s", "hello world");
-//	fatal("Fatal", "%s", "hello world");
-	debug("Daemon", "%s", "==========Daemon Daemon");
-	return 0;
-}
-#endif
 
